@@ -1,0 +1,18 @@
+.dashboard-card{
+    transition:0.3s;
+    border-radius:15px;
+}
+
+.dashboard-card:hover{
+    transform:translateY(-8px);
+    box-shadow:0 12px 25px rgba(0,0,0,0.15);
+}
+
+.card{
+    border:none;
+    border-radius:15px;
+}
+
+.card-body i{
+    margin-bottom:15px;
+}
