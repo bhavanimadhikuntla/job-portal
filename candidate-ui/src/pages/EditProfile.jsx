@@ -1,7 +1,10 @@
-import { useEffect, useState } from "react";
-import { getCandidateProfile, updateCandidateProfile } from "../services/ApiService";
-import { useNavigate } from "react-router-dom";
 
+import { useEffect, useState } from "react";
+import {
+    getCandidateProfile,
+    updateCandidateProfile
+} from "../services/ApiService";
+import { useNavigate } from "react-router-dom";
 
 function EditProfile() {
 
@@ -11,129 +14,138 @@ function EditProfile() {
 
     const navigate = useNavigate();
 
-
     const [profile, setProfile] = useState({
-
         qualification: "",
         experience: "",
         skills: "",
         specialization: "",
         city: "",
         state: ""
-
     });
 
-
-
-    // Load existing profile data
+    // =========================
+    // Load Candidate Profile
+    // =========================
 
     useEffect(() => {
 
+        if (!userId) {
+            console.log("No userId found in localStorage");
+            alert("Please login first");
+            navigate("/login");
+            return;
+        }
+
+        console.log("Loading profile for userId:", userId);
+
         getCandidateProfile(userId)
+            .then((res) => {
 
-        .then((res) => {
+                console.log("Profile Data:", res.data);
 
-            console.log("Profile Data:", res.data);
+                setProfile({
+                    qualification: res.data.qualification || "",
+                    experience: res.data.experience || "",
+                    skills: res.data.skills || "",
+                    specialization: res.data.specialization || "",
+                    city: res.data.city || "",
+                    state: res.data.state || ""
+                });
 
-            setProfile({
+            })
+            .catch((err) => {
 
-                qualification: res.data.qualification || "",
-                experience: res.data.experience || "",
-                skills: res.data.skills || "",
-                specialization: res.data.specialization || "",
-                city: res.data.city || "",
-                state: res.data.state || ""
+                console.error("Profile Load Error:", err);
+
+                console.error(
+                    "Status:",
+                    err.response?.status
+                );
+
+                console.error(
+                    "Response:",
+                    err.response?.data
+                );
 
             });
 
-        })
-
-        .catch((err) => {
-
-            console.log("Profile Load Error:", err);
-
-        });
+    }, [userId, navigate]);
 
 
-    }, [userId]);
-
-
-
-
+    // =========================
+    // Handle Input Changes
+    // =========================
 
     const handleChange = (e) => {
 
-
         setProfile({
-
             ...profile,
-
             [e.target.name]: e.target.value
-
         });
-
 
     };
 
 
-
-
+    // =========================
+    // Update Profile
+    // =========================
 
     const updateProfile = () => {
 
+        if (!userId) {
+            alert("User not logged in");
+            return;
+        }
 
         const updatedData = {
-
-            userId: userId,
-
+            userId: Number(userId),
             ...profile
-
         };
-
 
         console.log("Sending Update:", updatedData);
 
-
-
         updateCandidateProfile(updatedData)
+            .then((res) => {
 
-        .then((res) => {
+                console.log(
+                    "Update Response:",
+                    res.data
+                );
 
+                alert("Profile Updated Successfully");
 
-            console.log("Update Response:", res.data);
+                navigate("/profile");
 
+            })
+            .catch((err) => {
 
-            alert("Profile Updated Successfully");
+                console.error(
+                    "Update Error:",
+                    err
+                );
 
+                console.error(
+                    "Status:",
+                    err.response?.status
+                );
 
-            navigate("/profile");
+                console.error(
+                    "Response:",
+                    err.response?.data
+                );
 
+                alert("Profile Update Failed");
 
-        })
-
-
-        .catch((err) => {
-
-
-            console.log("Update Error:", err);
-
-
-        });
-
+            });
 
     };
-
-
-
 
 
     return (
 
         <div className="container py-5">
 
-
             <div className="card shadow">
-
 
                 <div className="card-header bg-success text-white">
 
@@ -141,134 +153,71 @@ function EditProfile() {
 
                 </div>
 
-
-
                 <div className="card-body">
 
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="qualification"
-
-                    value={profile.qualification}
-
-                    onChange={handleChange}
-
-                    placeholder="Qualification"
-
+                        className="form-control mb-3"
+                        name="qualification"
+                        value={profile.qualification}
+                        onChange={handleChange}
+                        placeholder="Qualification"
                     />
 
-
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="specialization"
-
-                    value={profile.specialization}
-
-                    onChange={handleChange}
-
-                    placeholder="Specialization"
-
+                        className="form-control mb-3"
+                        name="specialization"
+                        value={profile.specialization}
+                        onChange={handleChange}
+                        placeholder="Specialization"
                     />
 
-
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="experience"
-
-                    value={profile.experience}
-
-                    onChange={handleChange}
-
-                    placeholder="Experience"
-
+                        className="form-control mb-3"
+                        name="experience"
+                        value={profile.experience}
+                        onChange={handleChange}
+                        placeholder="Experience"
                     />
 
-
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="skills"
-
-                    value={profile.skills}
-
-                    onChange={handleChange}
-
-                    placeholder="Skills"
-
+                        className="form-control mb-3"
+                        name="skills"
+                        value={profile.skills}
+                        onChange={handleChange}
+                        placeholder="Skills"
                     />
 
-
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="city"
-
-                    value={profile.city}
-
-                    onChange={handleChange}
-
-                    placeholder="City"
-
+                        className="form-control mb-3"
+                        name="city"
+                        value={profile.city}
+                        onChange={handleChange}
+                        placeholder="City"
                     />
 
-
-
-
                     <input
-
-                    className="form-control mb-3"
-
-                    name="state"
-
-                    value={profile.state}
-
-                    onChange={handleChange}
-
-                    placeholder="State"
-
+                        className="form-control mb-3"
+                        name="state"
+                        value={profile.state}
+                        onChange={handleChange}
+                        placeholder="State"
                     />
-
-
-
 
                     <button
-    className="btn btn-primary"
-    onClick={updateProfile}
->
-    Update Profile
-</button>
-
-
+                        className="btn btn-primary"
+                        onClick={updateProfile}
+                    >
+                        Update Profile
+                    </button>
 
                 </div>
 
-
             </div>
-
 
         </div>
 
     );
-
 }
 
-
 export default EditProfile;
+
