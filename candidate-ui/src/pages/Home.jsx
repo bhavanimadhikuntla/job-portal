@@ -8,7 +8,7 @@ import Statistics from "../components/Statistics";
 import RecruitmentProcess from "../components/RecruitmentProcess";
 import AboutSection from "../components/AboutSection";
 import Testimonials from "../components/Testimonials";
-import ContactSection from "../components/ContactSection";
+import ContactSection from "../components/contactSection";
 function Home() {
 
     return (
