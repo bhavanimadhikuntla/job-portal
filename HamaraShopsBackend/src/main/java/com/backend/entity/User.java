@@ -15,8 +15,6 @@ import lombok.Setter;
 @Table(name = "users")
 @Getter
 @Setter
-
-@Builder
 public class User {
 	@Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -47,7 +45,7 @@ public class User {
 	}
 
 	public User(Long userId, String firstName, String lastName, String email, String password, String mobileNumber,
-			String role) {
+			String role, CandidateProfile candidateProfile) {
 		super();
 		this.userId = userId;
 		this.firstName = firstName;
@@ -56,6 +54,7 @@ public class User {
 		this.password = password;
 		this.mobileNumber = mobileNumber;
 		this.role = role;
+		this.candidateProfile = candidateProfile;
 	}
 
 	public Long getUserId() {
@@ -113,6 +112,16 @@ public class User {
 	public void setRole(String role) {
 		this.role = role;
 	}
+
+	public CandidateProfile getCandidateProfile() {
+		return candidateProfile;
+	}
+
+	public void setCandidateProfile(CandidateProfile candidateProfile) {
+		this.candidateProfile = candidateProfile;
+	}
+
+
     
 	
 }
