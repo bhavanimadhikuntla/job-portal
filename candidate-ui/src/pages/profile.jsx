@@ -1,163 +1,131 @@
+
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
 import axios from "axios";
 
-
-function EditProfile() {
-
-    const navigate = useNavigate();
+function Profile() {
 
     const userId = localStorage.getItem("userId");
 
-
-    const [profile, setProfile] = useState({
-        qualification: "",
-        specialization: "",
-        experience: "",
-        skills: "",
-        city: "",
-        state: ""
-    });
-
+    const [profile, setProfile] = useState(null);
+    const [loading, setLoading] = useState(true);
 
     useEffect(() => {
+
+        if (!userId) {
+            setLoading(false);
+            return;
+        }
 
         axios.get(
             `https://job-portal-production-fe2c.up.railway.app/api/candidate-profile/${userId}`
         )
         .then(response => {
-
-            setProfile({
-                qualification: response.data.qualification,
-                specialization: response.data.specialization,
-                experience: response.data.experience,
-                skills: response.data.skills,
-                city: response.data.city,
-                state: response.data.state
-            });
-
+            setProfile(response.data);
         })
         .catch(error => {
-            console.log(error);
+            console.log("Profile error:", error);
+        })
+        .finally(() => {
+            setLoading(false);
         });
 
     }, [userId]);
 
+    if (!userId) {
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-danger">
+                    Please login first.
+                </div>
+            </div>
+        );
+    }
 
+    if (loading) {
+        return (
+            <div className="container mt-4">
+                <h3>Loading Profile...</h3>
+            </div>
+        );
+    }
 
-    const handleChange = (e) => {
-
-        setProfile({
-            ...profile,
-            [e.target.name]: e.target.value
-        });
-
-    };
-
-
-
-    const updateProfile = () => {
-
-
-        axios.put(
-            `https://job-portal-production-fe2c.up.railway.app/api/update/${userId}`,
-            profile
-        )
-        .then(response => {
-
-            alert(response.data.message);
-
-            navigate("/profile");
-
-        })
-        .catch(error => {
-
-            console.log(error);
-
-        });
-
-    };
-
-
+    if (!profile) {
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-warning">
+                    Profile not found.
+                </div>
+            </div>
+        );
+    }
 
     return (
-
         <div className="container mt-4">
 
-            <h2>Edit Profile</h2>
+            <h2 className="mb-4">My Profile</h2>
 
+            <div className="card shadow p-4">
 
-            <div className="card p-4">
+                <h4 className="mb-3">
+                    Candidate Profile
+                </h4>
 
+                <p>
+                    <strong>Qualification:</strong>{" "}
+                    {profile.qualification || "Not provided"}
+                </p>
 
-                <input
-                    className="form-control mb-3"
-                    name="qualification"
-                    value={profile.qualification}
-                    onChange={handleChange}
-                    placeholder="Qualification"
-                />
+                <p>
+                    <strong>Specialization:</strong>{" "}
+                    {profile.specialization || "Not provided"}
+                </p>
 
+                <p>
+                    <strong>Experience:</strong>{" "}
+                    {profile.experience || "Not provided"}
+                </p>
 
-                <input
-                    className="form-control mb-3"
-                    name="specialization"
-                    value={profile.specialization}
-                    onChange={handleChange}
-                    placeholder="Specialization"
-                />
+                <p>
+                    <strong>Skills:</strong>{" "}
+                    {profile.skills || "Not provided"}
+                </p>
 
+                <p>
+                    <strong>City:</strong>{" "}
+                    {profile.city || "Not provided"}
+                </p>
 
-                <input
-                    className="form-control mb-3"
-                    name="experience"
-                    value={profile.experience}
-                    onChange={handleChange}
-                    placeholder="Experience"
-                />
+                <p>
+                    <strong>State:</strong>{" "}
+                    {profile.state || "Not provided"}
+                </p>
 
+                <p>
+                    <strong>Application Status:</strong>{" "}
+                    {profile.applicationStatus || "Not provided"}
+                </p>
 
-                <input
-                    className="form-control mb-3"
-                    name="skills"
-                    value={profile.skills}
-                    onChange={handleChange}
-                    placeholder="Skills"
-                />
+                <p>
+                    <strong>Remarks:</strong>{" "}
+                    {profile.remarks || "No remarks"}
+                </p>
 
+                <div className="mt-3">
 
-                <input
-                    className="form-control mb-3"
-                    name="city"
-                    value={profile.city}
-                    onChange={handleChange}
-                    placeholder="City"
-                />
+                    <Link
+                        to="/edit-profile"
+                        className="btn btn-primary"
+                    >
+                        Edit Profile
+                    </Link>
 
-
-                <input
-                    className="form-control mb-3"
-                    name="state"
-                    value={profile.state}
-                    onChange={handleChange}
-                    placeholder="State"
-                />
-
-
-                <button
-    className="btn btn-primary"
-    onClick={() => navigate("/edit-profile")}
->
-    Edit Profile
-</button>
-
+                </div>
 
             </div>
 
         </div>
-
     );
 }
 
-
-export default EditProfile;
+export default Profile;

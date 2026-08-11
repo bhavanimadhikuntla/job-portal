@@ -250,18 +250,11 @@ function EditProfile() {
 
 
                     <button
-
-                    type="button"
-
-                    className="btn btn-success"
-
-                    onClick={updateProfile}
-
-                    >
-
-                        Update Profile
-
-                    </button>
+    className="btn btn-primary"
+    onClick={updateProfile}
+>
+    Update Profile
+</button>
 
 
 
