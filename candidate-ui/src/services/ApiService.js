@@ -1,7 +1,7 @@
 import axios from "axios";
 
 
-const API_URL = job-portal-production-fe2c.up.railway.app
+const API_URL = "https://job-portal-production-fe2c.up.railway.app/api";
 
 
 export const loginUser = (data)=>{
