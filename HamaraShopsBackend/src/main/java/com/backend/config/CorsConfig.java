@@ -15,12 +15,9 @@ public class CorsConfig {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
                 registry.addMapping("/**")
-                        .allowedOrigins(
-                                "https://job-portal-jabcucaxj-bhavanimadhikuntlas-projects.vercel.app",
-                                "https://job-portal-azure-nu.vercel.app",
-                                "http://localhost:5173",
-                                "http://localhost:5174",
-                                "http://localhost:5175"
+                        .allowedOriginPatterns(
+                                "https://*.vercel.app",
+                                "http://localhost:*"
                         )
                         .allowedMethods(
                                 "GET",
