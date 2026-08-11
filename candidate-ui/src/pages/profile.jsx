@@ -23,7 +23,7 @@ function EditProfile() {
     useEffect(() => {
 
         axios.get(
-            `http://localhost:8080/api/candidate-profile/${userId}`
+            `https://job-portal-production-fe2c.up.railway.app/api/api/candidate-profile/${userId}`
         )
         .then(response => {
 
@@ -60,7 +60,7 @@ function EditProfile() {
 
 
         axios.put(
-            `http://localhost:8080/api/update/${userId}`,
+            `https://job-portal-production-fe2c.up.railway.app/api/update/${userId}`,
             profile
         )
         .then(response => {
