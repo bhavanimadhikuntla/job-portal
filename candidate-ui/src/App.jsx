@@ -6,7 +6,7 @@ import Register from "./pages/Register";
 import About from "./pages/About";
 import Jobs from "./pages/Jobs";
 import Dashboard from "./pages/Dashboard";
-import Profile from "./pages/Profile";
+import Profile from "./pages/profile";
 import EditProfile from "./pages/EditProfile";
 import RecruiterDashboard from "./pages/RecruiterDashboard";
 import CreateJob from "./pages/CreateJob";
