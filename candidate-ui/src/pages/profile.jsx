@@ -23,9 +23,15 @@ function Profile() {
                 setProfile(response.data);
             })
             .catch(error => {
-                console.error("Profile error:", error);
-                setError("Unable to load profile.");
-            })
+    console.log("Profile error:", error);
+
+    if (error.response) {
+        console.log("Status:", error.response.status);
+        console.log("Response:", error.response.data);
+    } else {
+        console.log("Error:", error.message);
+    }
+})
             .finally(() => {
                 setLoading(false);
             });
