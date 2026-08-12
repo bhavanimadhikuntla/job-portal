@@ -1,7 +1,6 @@
-
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import axios from "axios";
+import { getCandidateProfile } from "../services/ApiService";
 
 function Profile() {
 
@@ -9,6 +8,7 @@ function Profile() {
 
     const [profile, setProfile] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [error, setError] = useState("");
 
     useEffect(() => {
 
@@ -17,18 +17,18 @@ function Profile() {
             return;
         }
 
-        axios.get(
-            `https://job-portal-production-fe2c.up.railway.app/api/candidate-profile/${userId}`
-        )
-        .then(response => {
-            setProfile(response.data);
-        })
-        .catch(error => {
-            console.log("Profile error:", error);
-        })
-        .finally(() => {
-            setLoading(false);
-        });
+        getCandidateProfile(userId)
+            .then(response => {
+                console.log("Profile response:", response.data);
+                setProfile(response.data);
+            })
+            .catch(error => {
+                console.error("Profile error:", error);
+                setError("Unable to load profile.");
+            })
+            .finally(() => {
+                setLoading(false);
+            });
 
     }, [userId]);
 
@@ -46,6 +46,16 @@ function Profile() {
         return (
             <div className="container mt-4">
                 <h3>Loading Profile...</h3>
+            </div>
+        );
+    }
+
+    if (error) {
+        return (
+            <div className="container mt-4">
+                <div className="alert alert-danger">
+                    {error}
+                </div>
             </div>
         );
     }
@@ -72,6 +82,21 @@ function Profile() {
                 </h4>
 
                 <p>
+                    <strong>Name:</strong>{" "}
+                    {profile.firstName} {profile.lastName}
+                </p>
+
+                <p>
+                    <strong>Email:</strong>{" "}
+                    {profile.email || "Not provided"}
+                </p>
+
+                <p>
+                    <strong>Mobile:</strong>{" "}
+                    {profile.mobileNumber || "Not provided"}
+                </p>
+
+                <p>
                     <strong>Qualification:</strong>{" "}
                     {profile.qualification || "Not provided"}
                 </p>
@@ -83,7 +108,7 @@ function Profile() {
 
                 <p>
                     <strong>Experience:</strong>{" "}
-                    {profile.experience || "Not provided"}
+                    {profile.experience ?? "Not provided"}
                 </p>
 
                 <p>
@@ -112,14 +137,12 @@ function Profile() {
                 </p>
 
                 <div className="mt-3">
-
                     <Link
                         to="/edit-profile"
                         className="btn btn-primary"
                     >
                         Edit Profile
                     </Link>
-
                 </div>
 
             </div>
