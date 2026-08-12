@@ -244,10 +244,9 @@ public class UserSeviceImpl implements UserService {
 
 
 	    CandidateProfile profile = candidateProfileRepository
-	            .findByUserUserId(userId)
-	            .orElseThrow(() ->
-	                    new RuntimeException("Candidate Profile Not Found"));
-
+        .findByUserId(userId)
+        .orElseThrow(() ->
+                new RuntimeException("Candidate Profile Not Found"));
 
 
 	    CandidateProfileResponse response =
