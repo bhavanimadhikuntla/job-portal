@@ -1,7 +1,8 @@
 package com.backend.dto;
 
 public class UpdateCandidateProfileRequest {
-	private Long userId;
+
+    private Long userId;
 
     private String skills;
 
@@ -9,60 +10,88 @@ public class UpdateCandidateProfileRequest {
 
     private String qualification;
 
+    private String specialization;
+
     private String city;
 
-	public UpdateCandidateProfileRequest() {
-		super();
-	}
+    private String state;
 
-	public UpdateCandidateProfileRequest(Long userId, String skills, Integer experience, String qualification,
-			String city) {
-		super();
-		this.userId = userId;
-		this.skills = skills;
-		this.experience = experience;
-		this.qualification = qualification;
-		this.city = city;
-	}
+    public UpdateCandidateProfileRequest() {
+        super();
+    }
 
-	public Long getUserId() {
-		return userId;
-	}
+    public UpdateCandidateProfileRequest(
+            Long userId,
+            String skills,
+            Integer experience,
+            String qualification,
+            String specialization,
+            String city,
+            String state) {
 
-	public void setUserId(Long userId) {
-		this.userId = userId;
-	}
+        super();
+        this.userId = userId;
+        this.skills = skills;
+        this.experience = experience;
+        this.qualification = qualification;
+        this.specialization = specialization;
+        this.city = city;
+        this.state = state;
+    }
 
-	public String getSkills() {
-		return skills;
-	}
+    public Long getUserId() {
+        return userId;
+    }
 
-	public void setSkills(String skills) {
-		this.skills = skills;
-	}
+    public void setUserId(Long userId) {
+        this.userId = userId;
+    }
 
-	public Integer getExperience() {
-		return experience;
-	}
+    public String getSkills() {
+        return skills;
+    }
 
-	public void setExperience(Integer experience) {
-		this.experience = experience;
-	}
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
 
-	public String getQualification() {
-		return qualification;
-	}
+    public Integer getExperience() {
+        return experience;
+    }
 
-	public void setQualification(String education) {
-		this.qualification = qualification;
-	}
+    public void setExperience(Integer experience) {
+        this.experience = experience;
+    }
 
-	public String getCity() {
-		return city;
-	}
+    public String getQualification() {
+        return qualification;
+    }
 
-	public void setCity(String location) {
-		this.city = city;
-	}
-    
+    public void setQualification(String qualification) {
+        this.qualification = qualification;
+    }
+
+    public String getSpecialization() {
+        return specialization;
+    }
+
+    public void setSpecialization(String specialization) {
+        this.specialization = specialization;
+    }
+
+    public String getCity() {
+        return city;
+    }
+
+    public void setCity(String city) {
+        this.city = city;
+    }
+
+    public String getState() {
+        return state;
+    }
+
+    public void setState(String state) {
+        this.state = state;
+    }
 }
