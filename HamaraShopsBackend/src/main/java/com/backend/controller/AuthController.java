@@ -128,4 +128,18 @@ public class AuthController {
 	            @PathVariable Long jobId) {
 	        return userService.getJobApplications(jobId);
 	    }
+		@GetMapping("/debug/profile/{userId}")
+public String debugProfile(@PathVariable Long userId) {
+
+    return candidateProfileRepository
+            .findByUserId(userId)
+            .map(profile ->
+                    "FOUND: profileId=" +
+                    profile.getCandidateProfileId() +
+                    ", userId=" +
+                    profile.getUser().getUserId() +
+                    ", qualification=" +
+                    profile.getQualification())
+            .orElse("NOT FOUND for userId=" + userId);
+}
 }
