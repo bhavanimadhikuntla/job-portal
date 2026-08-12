@@ -236,95 +236,79 @@ public class UserSeviceImpl implements UserService {
 	    return response;
 	}
 	@Override
-	public CandidateProfileResponse getCandidateProfileByUserId(Long userId) {
+public CandidateProfileResponse getCandidateProfileByUserId(Long userId) {
 
-	    User user = userRepository.findById(userId)
-	            .orElseThrow(() ->
-	                    new RuntimeException("User Not Found"));
+    User user = userRepository.findById(userId)
+            .orElseThrow(() ->
+                    new RuntimeException("User Not Found"));
 
+    CandidateProfile profile =
+            candidateProfileRepository
+                    .findByUserId(userId)
+                    .orElseThrow(() ->
+                            new RuntimeException("Candidate Profile Not Found"));
 
-	    CandidateProfile profile = candidateProfileRepository
-        .findByUserId(userId)
-        .orElseThrow(() ->
-                new RuntimeException("Candidate Profile Not Found"));
+    CandidateProfileResponse response =
+            new CandidateProfileResponse();
 
+    response.setCandidateProfileId(
+            profile.getCandidateProfileId()
+    );
 
-	    CandidateProfileResponse response =
-	            new CandidateProfileResponse();
+    response.setUserId(
+            user.getUserId()
+    );
 
+    response.setFirstName(
+            user.getFirstName()
+    );
 
-	    response.setCandidateProfileId(
-	            profile.getCandidateProfileId()
-	    );
+    response.setLastName(
+            user.getLastName()
+    );
 
-	    response.setUserId(
-	            user.getUserId()
-	    );
+    response.setEmail(
+            user.getEmail()
+    );
 
+    response.setMobileNumber(
+            user.getMobileNumber()
+    );
 
-	    response.setFirstName(
-	            user.getFirstName()
-	    );
+    response.setQualification(
+            profile.getQualification()
+    );
 
+    response.setSpecialization(
+            profile.getSpecialization()
+    );
 
-	    response.setLastName(
-	            user.getLastName()
-	    );
+    response.setExperience(
+            profile.getExperience()
+    );
 
+    response.setSkills(
+            profile.getSkills()
+    );
 
-	    response.setEmail(
-	            user.getEmail()
-	    );
+    response.setCity(
+            profile.getCity()
+    );
 
+    response.setState(
+            profile.getState()
+    );
 
-	    response.setMobileNumber(
-	            user.getMobileNumber()
-	    );
+    response.setApplicationStatus(
+            profile.getApplicationStatus()
+    );
 
+    response.setRemarks(
+            profile.getRemarks()
+    );
 
-	    response.setQualification(
-	            profile.getQualification()
-	    );
-
-
-	    response.setSpecialization(
-	            profile.getSpecialization()
-	    );
-
-
-	    response.setExperience(
-	            profile.getExperience()
-	    );
-
-
-	    response.setSkills(
-	            profile.getSkills()
-	    );
-
-
-	    response.setCity(
-	            profile.getCity()
-	    );
-
-
-	    response.setState(
-	            profile.getState()
-	    );
-
-
-	    response.setApplicationStatus(
-	            profile.getApplicationStatus()
-	    );
-
-
-	    response.setRemarks(
-	            profile.getRemarks()
-	    );
-
-
-	    return response;
-	}
-
+    return response;
+}
 	@Override
 	public ApiResponse updateCandidateProfile(
 	        UpdateCandidateProfileRequest request) {
@@ -332,7 +316,7 @@ public class UserSeviceImpl implements UserService {
 
 	    CandidateProfile profile =
 	            candidateProfileRepository
-	            .findByUserUserId(request.getUserId())
+	            .findByUserId(request.getUserId())
 	            .orElseThrow(() ->
 	                new RuntimeException(
 	                    "Candidate Profile Not Found"
@@ -346,7 +330,7 @@ public class UserSeviceImpl implements UserService {
 
 
 	    profile.setSpecialization(
-	            request.getQualification()
+	            request.getSpecialization()
 	    );
 
 
@@ -366,7 +350,7 @@ public class UserSeviceImpl implements UserService {
 
 
 	    profile.setState(
-	            request.getCity()
+	            request.getState()
 	    );
 
 
@@ -407,7 +391,7 @@ public class UserSeviceImpl implements UserService {
 
 	    CandidateProfile profile =
 	            candidateProfileRepository
-	                    .findByUserUserId(userId)
+	                    .findByUserId(userId)
 	                    .orElseThrow(() ->
 	                            new RuntimeException("Candidate Profile Not Found"));
 
@@ -478,7 +462,7 @@ public class UserSeviceImpl implements UserService {
 
 	        CandidateProfile profile =
 	                candidateProfileRepository
-	                        .findByUserUserId(application.getUserId())
+	                        .findByUserId(application.getUserId())
 	                        .orElseThrow(() ->
 	                                new RuntimeException("Candidate Profile Not Found"));
 
