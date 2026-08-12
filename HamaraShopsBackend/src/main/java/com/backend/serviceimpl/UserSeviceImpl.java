@@ -238,74 +238,36 @@ public class UserSeviceImpl implements UserService {
 	@Override
 public CandidateProfileResponse getCandidateProfileByUserId(Long userId) {
 
-    User user = userRepository.findById(userId)
+    System.out.println("PROFILE REQUEST USER ID = " + userId);
+
+    CandidateProfile profile = candidateProfileRepository
+            .findByUserId(userId)
             .orElseThrow(() ->
-                    new RuntimeException("User Not Found"));
+                    new RuntimeException(
+                            "Candidate Profile Not Found for userId = " + userId
+                    ));
 
-    CandidateProfile profile =
-            candidateProfileRepository
-                    .findByUserId(userId)
-                    .orElseThrow(() ->
-                            new RuntimeException("Candidate Profile Not Found"));
+    User user = profile.getUser();
 
-    CandidateProfileResponse response =
-            new CandidateProfileResponse();
+    CandidateProfileResponse response = new CandidateProfileResponse();
 
-    response.setCandidateProfileId(
-            profile.getCandidateProfileId()
-    );
+    response.setCandidateProfileId(profile.getCandidateProfileId());
+    response.setUserId(user.getUserId());
 
-    response.setUserId(
-            user.getUserId()
-    );
+    response.setFirstName(user.getFirstName());
+    response.setLastName(user.getLastName());
+    response.setEmail(user.getEmail());
+    response.setMobileNumber(user.getMobileNumber());
 
-    response.setFirstName(
-            user.getFirstName()
-    );
+    response.setQualification(profile.getQualification());
+    response.setSpecialization(profile.getSpecialization());
+    response.setExperience(profile.getExperience());
+    response.setSkills(profile.getSkills());
+    response.setCity(profile.getCity());
+    response.setState(profile.getState());
 
-    response.setLastName(
-            user.getLastName()
-    );
-
-    response.setEmail(
-            user.getEmail()
-    );
-
-    response.setMobileNumber(
-            user.getMobileNumber()
-    );
-
-    response.setQualification(
-            profile.getQualification()
-    );
-
-    response.setSpecialization(
-            profile.getSpecialization()
-    );
-
-    response.setExperience(
-            profile.getExperience()
-    );
-
-    response.setSkills(
-            profile.getSkills()
-    );
-
-    response.setCity(
-            profile.getCity()
-    );
-
-    response.setState(
-            profile.getState()
-    );
-
-    response.setApplicationStatus(
-            profile.getApplicationStatus()
-    );
-
-    response.setRemarks(
-            profile.getRemarks()
-    );
+    response.setApplicationStatus(profile.getApplicationStatus());
+    response.setRemarks(profile.getRemarks());
 
     return response;
 }
