@@ -30,13 +30,15 @@ import com.backend.dto.ShortlistCandidateRequest;
 import com.backend.dto.ShortlistSnapshotResponse;
 import com.backend.dto.UpdateCandidateProfileRequest;
 import com.backend.service.UserService;
+import com.backend.repo.CandidateProfileRepository;
 @RestController
 @RequestMapping("/api")
 @CrossOrigin("*")
 public class AuthController {
 	 @Autowired
 	    private UserService userService;
-
+     @Autowired
+private CandidateProfileRepository candidateProfileRepository;
 	    @PostMapping("/login")
 	    public LoginResponse login(@RequestBody LoginRequest request) {
 

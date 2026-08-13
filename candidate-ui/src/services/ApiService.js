@@ -1,9 +1,7 @@
 
 import axios from "axios";
 
-const API_URL =
-    import.meta.env.VITE_API_URL ||
-    "https://job-portal-production-fe2c.up.railway.app/api";
+const API_URL ="http://localhost:8080/api";
 
 // =================== AUTH APIs ===================
 

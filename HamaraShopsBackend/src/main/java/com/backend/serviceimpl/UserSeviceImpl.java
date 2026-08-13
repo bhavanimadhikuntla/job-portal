@@ -106,7 +106,8 @@ public class UserSeviceImpl implements UserService {
         profile.setSkills(request.getSkills());
         profile.setCity(request.getCity());
         profile.setState(request.getState());
-
+        profile.setApplicationStatus("PENDING");
+profile.setRemarks(null);
         candidateProfileRepository.save(profile);
 
         return new ApiResponse(
@@ -238,95 +239,79 @@ public class UserSeviceImpl implements UserService {
 	@Override
 public CandidateProfileResponse getCandidateProfileByUserId(Long userId) {
 
-    System.out.println("PROFILE REQUEST USER ID = " + userId);
-
-    CandidateProfile profile = candidateProfileRepository
-            .findByUserId(userId)
+    User user = userRepository.findById(userId)
             .orElseThrow(() ->
-                    new RuntimeException(
-                            "Candidate Profile Not Found for userId = " + userId
-                    ));
+                    new RuntimeException("User Not Found"));
 
-    User user = profile.getUser();
+    CandidateProfile profile =
+            candidateProfileRepository
+                    .findByUserId(userId)
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Candidate Profile Not Found for userId = " + userId
+                            ));
 
-    CandidateProfileResponse response = new CandidateProfileResponse();
+    CandidateProfileResponse response =
+            new CandidateProfileResponse();
 
-    response.setCandidateProfileId(profile.getCandidateProfileId());
-    response.setUserId(user.getUserId());
+    response.setCandidateProfileId(
+            profile.getCandidateProfileId()
+    );
 
-    response.setFirstName(user.getFirstName());
-    response.setLastName(user.getLastName());
-    response.setEmail(user.getEmail());
-    response.setMobileNumber(user.getMobileNumber());
+    response.setUserId(
+            user.getUserId()
+    );
 
-    response.setQualification(profile.getQualification());
-    response.setSpecialization(profile.getSpecialization());
-    response.setExperience(profile.getExperience());
-    response.setSkills(profile.getSkills());
-    response.setCity(profile.getCity());
-    response.setState(profile.getState());
+    response.setFirstName(
+            user.getFirstName()
+    );
 
-    response.setApplicationStatus(profile.getApplicationStatus());
-    response.setRemarks(profile.getRemarks());
+    response.setLastName(
+            user.getLastName()
+    );
+
+    response.setEmail(
+            user.getEmail()
+    );
+
+    response.setMobileNumber(
+            user.getMobileNumber()
+    );
+
+    response.setQualification(
+            profile.getQualification()
+    );
+
+    response.setSpecialization(
+            profile.getSpecialization()
+    );
+
+    response.setExperience(
+            profile.getExperience()
+    );
+
+    response.setSkills(
+            profile.getSkills()
+    );
+
+    response.setCity(
+            profile.getCity()
+    );
+
+    response.setState(
+            profile.getState()
+    );
+
+    response.setApplicationStatus(
+            profile.getApplicationStatus()
+    );
+
+    response.setRemarks(
+            profile.getRemarks()
+    );
 
     return response;
 }
-	@Override
-	public ApiResponse updateCandidateProfile(
-	        UpdateCandidateProfileRequest request) {
-
-
-	    CandidateProfile profile =
-	            candidateProfileRepository
-	            .findByUserId(request.getUserId())
-	            .orElseThrow(() ->
-	                new RuntimeException(
-	                    "Candidate Profile Not Found"
-	                ));
-
-
-
-	    profile.setQualification(
-	            request.getQualification()
-	    );
-
-
-	    profile.setSpecialization(
-	            request.getSpecialization()
-	    );
-
-
-	    profile.setExperience(
-	            request.getExperience()
-	    );
-
-
-	    profile.setSkills(
-	            request.getSkills()
-	    );
-
-
-	    profile.setCity(
-	            request.getCity()
-	    );
-
-
-	    profile.setState(
-	            request.getState()
-	    );
-
-
-
-	    candidateProfileRepository.save(profile);
-
-
-
-	    return new ApiResponse(
-	            true,
-	            "Candidate Profile Updated Successfully"
-	    );
-
-	}
 	@Override
 	public ApiResponse applyCandidate(ApplyCandidateRequest request) {
 
@@ -454,4 +439,30 @@ public CandidateProfileResponse getCandidateProfileByUserId(Long userId) {
 
 	    return response;
 	}
+	@Override
+public ApiResponse updateCandidateProfile(
+        UpdateCandidateProfileRequest request) {
+
+    CandidateProfile profile =
+            candidateProfileRepository
+                    .findByUserId(request.getUserId())
+                    .orElseThrow(() ->
+                            new RuntimeException(
+                                    "Candidate Profile Not Found"
+                            ));
+
+    profile.setQualification(request.getQualification());
+    profile.setSpecialization(request.getSpecialization());
+    profile.setExperience(request.getExperience());
+    profile.setSkills(request.getSkills());
+    profile.setCity(request.getCity());
+    profile.setState(request.getState());
+
+    candidateProfileRepository.save(profile);
+
+    return new ApiResponse(
+            true,
+            "Candidate Profile Updated Successfully"
+    );
+}
 }

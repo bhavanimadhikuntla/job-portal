@@ -112,7 +112,7 @@ function JobApplications() {
                                             app.resume ?
 
                                                 <a
-                                                    href={`https://job-portal-production-fe2c.up.railway.app/api${app.resume}`}
+                                                    href={`http://localhost:8080/api${app.resume}`}
                                                     target="_blank"
                                                     rel="noreferrer"
                                                 >
